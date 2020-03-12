@@ -2,9 +2,7 @@ package enums;
 
 public enum Codigo {
 
-    /*
-    TERMINAIS
-     */
+//    TERMINAIS
     PROGRAM(1),
     LABEL(2),
     CONST(3),
@@ -36,7 +34,7 @@ public enum Codigo {
     CASE(29),
     LITERAL(48),
 
-    //Simbolos especiais
+    //ESPECIAIS
     OP_SOMA(30, "+"),
     OP_SUB(31, "-"),
     OP_MULT(32, "*"),
@@ -59,10 +57,7 @@ public enum Codigo {
     OP_PONTO_PONTO(50, ".."),
     OP_CIFRAO(51, "$"),
 
-
-    /*
-    NAO TERMINAIS
-     */
+//    NAO TERMINAIS
     PROGRAMA(52),
     BLOCO(53),
     DCLROT(54),
