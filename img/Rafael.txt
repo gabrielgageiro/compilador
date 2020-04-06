@@ -1,0 +1,10 @@
+Os símbolos reconhecidos pelo léxico se
+enquadram em uma das seguintes classes:
+• Identificadores (do usuário, da linguagem -
+palavras-chaves, funções embutidas);
+• Números (inteiros, reais, complexos);
+• Operadores (aritméticos, relacionais, lógicos);
+• Parentisadores (abre/fecha aspas, abre/fecha
+parênteses, abre/fecha colchetes, abre/fecha
+chaves, BEGIN/END);
+• Sinais de pontuação (ponto, vírgula, ponto-evírgula).
