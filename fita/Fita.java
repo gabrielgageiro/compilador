@@ -1,4 +1,4 @@
-package leitor;
+package fita;
 
 public class Fita {
 

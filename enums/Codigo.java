@@ -1,10 +1,7 @@
 package enums;
 
-import derivacao.DerivacaoBuilder;
-
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public enum Codigo {
@@ -134,13 +131,6 @@ public enum Codigo {
         }
 
         return codigo;
-    }
-
-    public String getOp() {
-        if(op == null){
-            return this.toString();
-        }
-        return op;
     }
 
     public static Codigo getByOperador(String palavra){

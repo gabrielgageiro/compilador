@@ -2,7 +2,7 @@ package automato;
 
 import enums.*;
 import exceptions.AnaliseLexicaException;
-import leitor.Fita;
+import fita.Fita;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -60,9 +60,7 @@ public class Automato {
             throw new AnaliseLexicaException("Um bloco não foi fechado!");
         }
 
-        Token token = retorno(estadoAtual, palavra.toString(), fita);
-        token.setPosicao(fita.getLinha(), fita.getColuna());
-        return token;
+        return retorno(estadoAtual, palavra.toString(), fita);
     }
 
     private Token retorno(Estado estadoFinal, String palavra, Fita fita) throws AnaliseLexicaException{

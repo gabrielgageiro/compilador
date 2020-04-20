@@ -7,9 +7,6 @@ public class Token {
     private String palavra;
     private Codigo codigo;
 
-    private int linha;
-    private int coluna;
-
     public Token(String palavra) {
         this.codigo = Codigo.valueOfByPalavra(palavra);
         this.palavra = palavra;
@@ -49,24 +46,4 @@ public class Token {
         return palavra == null && codigo == null;
     }
 
-    public int getLinha() {
-        return linha;
-    }
-
-    public void setLinha(int linha) {
-        this.linha = linha;
-    }
-
-    public int getColuna() {
-        return coluna;
-    }
-
-    public void setColuna(int coluna) {
-        this.coluna = coluna;
-    }
-
-    public void setPosicao(int linha, int coluna){
-        this.linha = linha;
-        this.coluna = coluna;
-    }
 }

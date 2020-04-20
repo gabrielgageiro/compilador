@@ -6,7 +6,7 @@ import automato.Token;
 import enums.TipoEntrada;
 import enums.TipoRetorno;
 import exceptions.AnaliseLexicaException;
-import leitor.Fita;
+import fita.Fita;
 
 import java.util.Stack;
 
