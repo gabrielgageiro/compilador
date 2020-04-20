@@ -9,13 +9,12 @@ import java.util.Map;
 public class Estado {
     private Map<Object, Estado> transicoes = new HashMap<>();
     private Estado excecao;
-    private TipoRetorno retornoEspecifico;
+    private TipoRetorno tipoRetorno;
 
     public Estado() {}
 
-    //Utilizado em estados finais com retorno predefinido
-    public Estado(TipoRetorno retornoEspecifico) {
-        this.retornoEspecifico = retornoEspecifico;
+    public Estado(TipoRetorno tipoRetorno) {
+        this.tipoRetorno = tipoRetorno;
     }
 
     public void addTransicao(Object entrada, Estado estado){
@@ -39,8 +38,8 @@ public class Estado {
         return estado;
     }
 
-    public TipoRetorno getRetornoEspecifico() {
-        return retornoEspecifico;
+    public TipoRetorno getTipoRetorno() {
+        return tipoRetorno;
     }
 
     public void setExcecao(Estado excecao) {

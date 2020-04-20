@@ -64,7 +64,7 @@ public class Automato {
     }
 
     private Token retorno(Estado estadoFinal, String palavra, Fita fita) throws AnaliseLexicaException{
-        TipoRetorno tipo = estadoFinal.getRetornoEspecifico();
+        TipoRetorno tipo = estadoFinal.getTipoRetorno();
 
         if(tipo != null){
             if(tipo == TipoRetorno.IGNORAR){
