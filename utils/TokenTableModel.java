@@ -64,6 +64,5 @@ public class TokenTableModel extends AbstractTableModel {
         linhas.add(token);
         int ultimoIndice = getRowCount() - 1;
         fireTableRowsInserted(ultimoIndice, ultimoIndice);
-
     }
 }

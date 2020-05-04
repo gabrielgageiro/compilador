@@ -48,8 +48,7 @@ public class Automato {
 
             fita.lerProximoCaracter();
 
-            //Caso tenha entrado em loop
-            if(cont > fita.getLenght()){
+            if(cont > fita.getLenght()){ // sai do loop infinito
                 break;
             }
 
