@@ -12,6 +12,11 @@ public class Token {
         this.palavra = palavra;
     }
 
+    public Token(Codigo codigo){
+        this.codigo = codigo;
+        this.palavra = codigo.getOp();
+    }
+
     public Token(String palavra, Codigo codigo) {
         this.palavra = palavra;
         this.codigo = codigo;

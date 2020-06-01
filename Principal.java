@@ -1,6 +1,8 @@
 import analises.AnaliseLexica;
+import analises.AnaliseSintatica;
 import automato.Token;
 import exceptions.AnaliseLexicaException;
+import exceptions.AnaliseSintaticaException;
 import utils.TokenTableModel;
 
 import java.awt.EventQueue;
@@ -108,10 +110,17 @@ class Principal extends JFrame {
                             Stack<Token> linhas = (Stack<Token>) tokensSet.clone();
                             tableCodigo.setModel(new TokenTableModel(linhas));
                             txtConsole.append("Analise Lexica terminado com sucesso!\n");
+
+                            Stack<Token> pilhaParsingInicial = AnaliseSintatica.getPilhaParsingInicial();
+                            while (!tokensSet.isEmpty() || !pilhaParsingInicial.isEmpty()){
+                                AnaliseSintatica.analisar(tokensSet, pilhaParsingInicial);
+                            }
                         }
                     } catch (AnaliseLexicaException e1) {
                         System.err.println(e1.getMessage());
                         txtConsole.append(e1.getMessage());
+                    } catch (AnaliseSintaticaException e2){
+                        txtConsole.append(e2.getMessage());
                     }
                 }
             }
