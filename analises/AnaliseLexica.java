@@ -30,7 +30,6 @@ public class AnaliseLexica {
         }
 
         Stack<Token> tokensInvertido = new Stack<>();
-        System.out.println("TAMANHO TOKENS: " + tokens.size());
         while (!tokens.isEmpty()){
             tokensInvertido.push(tokens.pop());
         }

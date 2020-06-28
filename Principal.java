@@ -14,8 +14,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Stack;
 import java.awt.Dimension;
+import java.util.stream.Collectors;
 import javax.swing.GroupLayout.Alignment;
 
 class Principal extends JFrame {
@@ -23,7 +26,8 @@ class Principal extends JFrame {
     private JTextArea textAreaPrograma = new JTextArea();
     private JTable tabelaCodigo;
     private JTable tabelaCodigoSemantico;
-    JTextArea txtConsole = new JTextArea();
+    private File arquivo;
+    private JTextArea txtConsole = new JTextArea();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -49,8 +53,26 @@ class Principal extends JFrame {
         btnSalvar.setIcon(new ImageIcon(Principal.class.getResource("/img/salvar.png")));
         btnSalvar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("SALVEI");
-            }
+
+                if(arquivo != null){
+                    try {
+                        Files.write(Paths.get(arquivo.getAbsolutePath()), textAreaPrograma.getText().getBytes());
+                    }catch (IOException ex){
+                        ex.printStackTrace();
+                    }
+                }else{
+                    JFileChooser fc = new JFileChooser();
+                    fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    int res = fc.showSaveDialog(null);
+                    if (res == JFileChooser.APPROVE_OPTION) {
+                        try {
+                            arquivo = fc.getSelectedFile();
+                            Files.write(Paths.get(arquivo.getAbsolutePath() + "/"+JOptionPane.showInputDialog("Nome do arquivo:") + ".lms"), textAreaPrograma.getText().getBytes());
+                        }catch (IOException ex){
+                            ex.printStackTrace();
+                        }
+                    }
+                }            }
         });
 
         JButton btnAbrir = new JButton();
@@ -61,11 +83,10 @@ class Principal extends JFrame {
                     JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
                     int returnValue = jfc.showOpenDialog(null);
 
-                    System.out.println("ABRI");
                     if (returnValue == JFileChooser.APPROVE_OPTION) {
-                        File arquivo = jfc.getSelectedFile();
+                        arquivo = jfc.getSelectedFile();
                         BufferedReader ler = new BufferedReader(new FileReader(arquivo));
-                        System.out.println(ler);
+                        textAreaPrograma.setText(ler.lines().collect(Collectors.joining(System.lineSeparator())));
                     }
                 } catch (IOException e1) {
 //                     TODO Auto-generated catch block
@@ -92,22 +113,22 @@ class Principal extends JFrame {
         btnRodar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(textAreaPrograma.getText());
                 if (textAreaPrograma != null && !textAreaPrograma.getText().isEmpty()) {
                     try {
-                        System.out.println("OI");
                         Stack<Token> tokensSet = AnaliseLexica.analisar(textAreaPrograma.getText().toCharArray());
                         if (tokensSet != null && !tokensSet.isEmpty()) {
                             Stack<Token> linhas = (Stack<Token>) tokensSet.clone();
-                            tabelaCodigo.setModel(new TokenTableModel(linhas));
                             txtConsole.append("Analise Lexica terminado com sucesso!\n");
 
                             Stack<Token> pilhaParsingInicial = AnaliseSintatica.getPilhaParsingInicial();
                             while (!tokensSet.isEmpty() || !pilhaParsingInicial.isEmpty()) {
                                 AnaliseSintatica.analisar(tokensSet, pilhaParsingInicial);
-                                txtConsole.append("Analise Sintatica terminado com sucesso!\n");
                             }
+                            tabelaCodigo.setModel(new TokenTableModel(tokensSet));
+                            tabelaCodigoSemantico.setModel(new TokenTableModel(linhas));
+
                         }
+                        txtConsole.append("Analise Sintatica terminado com sucesso!\n");
                     } catch (AnaliseLexicaException e1) {
                         System.err.println(e1.getMessage());
                         txtConsole.append(e1.getMessage());
@@ -127,7 +148,6 @@ class Principal extends JFrame {
                                            ActionListener() {
                                                public void actionPerformed(ActionEvent e) {
                                                    reset();
-                                                   System.out.println("PAREI");
                                                }
                                            });
 
@@ -163,7 +183,7 @@ class Principal extends JFrame {
                 new Object[][]{
                 },
                 new String[]{
-                        "C\u00F3digo", "Palavra"
+                        "Código", "Palavra"
                 }
         ));
         tabelaCodigo.setToolTipText("");
@@ -177,7 +197,7 @@ class Principal extends JFrame {
                 new Object[][]{
                 },
                 new String[]{
-                        "C\u00F3digo", "Palavra"
+                        "Código", "Palavra"
                 }
         ));
         tabelaCodigoSemantico.setToolTipText("");
@@ -234,12 +254,8 @@ class Principal extends JFrame {
     }
 
     private void reset() {
-//        derivacoes = null;
-//        parsing = null;
-
         tabelaCodigo.setModel(new TokenTableModel(new Stack<>()));
         tabelaCodigoSemantico.setModel(new TokenTableModel(new Stack<>()));
-
         txtConsole.setText("");
     }
 }

@@ -26,7 +26,6 @@ public class AnaliseSintatica {
         Codigo x = parsing.peek().getCodigo();
 
         if(derivacoes.isEmpty() && !parsing.isEmpty()){
-            System.out.println("oi");
             throw new AnaliseSintaticaException("Final prematuro -> Esperado: " + x.getOp());
         }
 
@@ -40,13 +39,10 @@ public class AnaliseSintatica {
 
                 return;
             }
-        }else{//todo: ARRUMAR
+        }else{
             Map<Codigo, List<Codigo>> y = Codigo.tabelaParsing.get(x);
-            System.out.println("fora  " + y);
             if(y != null){
-                System.out.println(y);
                 List<Codigo> yk = y.get(a);
-                System.out.println(yk);
                 if(yk != null){
                     parsing.pop();
                     parsing.addAll(yk.stream().map( c -> new Token(c)).collect(Collectors.toList()));
