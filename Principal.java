@@ -1,7 +1,9 @@
 import analises.AnaliseLexica;
+import analises.AnaliseSemantica;
 import analises.AnaliseSintatica;
 import automato.Token;
 import exceptions.AnaliseLexicaException;
+import exceptions.AnaliseSemanticaException;
 import exceptions.AnaliseSintaticaException;
 import utils.TokenTableModel;
 
@@ -113,6 +115,8 @@ class Principal extends JFrame {
         btnRodar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AnaliseSemantica.resetAll();
+
                 if (textAreaPrograma != null && !textAreaPrograma.getText().isEmpty()) {
                     try {
                         Stack<Token> tokensSet = AnaliseLexica.analisar(textAreaPrograma.getText().toCharArray());
@@ -134,6 +138,8 @@ class Principal extends JFrame {
                         txtConsole.append(e1.getMessage());
                     } catch (AnaliseSintaticaException e2) {
                         txtConsole.append(e2.getMessage());
+                    } catch (AnaliseSemanticaException e3) {
+                        txtConsole.append(e3.getMessage());
                     }
                 }
             }

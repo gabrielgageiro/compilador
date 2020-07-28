@@ -2,12 +2,15 @@ package analises;
 
 import automato.Token;
 import enums.Codigo;
+import exceptions.AnaliseSemanticaException;
 import exceptions.AnaliseSintaticaException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
+
+import static analises.AnaliseSemantica.*;
 
 public class AnaliseSintatica {
 
@@ -17,7 +20,7 @@ public class AnaliseSintatica {
         return parsing;
     }
 
-    public static void analisar(Stack<Token> derivacoes, Stack<Token> parsing) throws AnaliseSintaticaException {
+    public static void analisar(Stack<Token> derivacoes, Stack<Token> parsing) throws AnaliseSintaticaException, AnaliseSemanticaException {
 
         if(!derivacoes.isEmpty() && parsing.isEmpty()){
             throw new AnaliseSintaticaException("Código fora do escopo");
@@ -31,6 +34,8 @@ public class AnaliseSintatica {
 
         Token i = derivacoes.peek();
         Codigo a = i.getCodigo();
+
+        classificarIdentificador(x, i);
 
         if(x.isTerminal()){
             if(x.equals(a)){
